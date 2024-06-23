@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sanity_flutter_demo/components/movie_gallery.dart';
 import 'package:sanity_flutter_demo/models/movie.dart';
-import 'package:sanity_flutter_demo/models/sanity_client.dart';
+import 'package:sanity_flutter_demo/services/sanity_client.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<Movie>> fetchMovies() async {
-    const String query = '*[_type == "movie"] { _id, title, poster { asset->{ url } } }';
+    const String query = '*[_type == "movie"] { _id, title, releaseDate, overview[0] { children[0] { text } }, poster { asset->{ url } }, castMembers[] { person->{ _id, name, image { asset->{ url, metadata } } } }}';
     final List<dynamic> result = await sanityClient.fetch(query: query);
 
     return result.map((data) => Movie.fromJson(data)).toList();
