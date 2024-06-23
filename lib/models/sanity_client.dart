@@ -51,7 +51,7 @@ class SanityClient {
   final String? token;
   final bool useCdn;
 
-  Uri _buildUri({required String query, Map<String, dynamic>? params}) {
+  Uri buildUri({required String query, Map<String, dynamic>? params}) {
     final Map<String, dynamic> queryParameters = <String, dynamic>{
       'query': query,
       if (params != null) ...params,
@@ -83,7 +83,7 @@ class SanityClient {
 
   Future<dynamic> fetch(
       {required String query, Map<String, dynamic>? params}) async {
-    final Uri uri = _buildUri(query: query, params: params);
+    final Uri uri = buildUri(query: query, params: params);
     final http.Response response = await _client.get(uri);
     return _returnResponse(response);
   }

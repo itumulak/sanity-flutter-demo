@@ -1,8 +1,8 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sanity_flutter_demo/components/movie_gallery.dart';
 import 'package:sanity_flutter_demo/models/movie.dart';
 import 'package:sanity_flutter_demo/models/sanity_client.dart';
 
@@ -20,30 +20,41 @@ class _HomeScreenState extends State<HomeScreen> {
     useCdn: true,
   );
 
-  late List<Movie> movies = [];
+  late Future<List<Movie>> _movies;
 
   @override
   void initState() {
     super.initState();
-    fetchMovies();
+    _movies = fetchMovies();
   }
 
-  Future<void> fetchMovies() async {
+  Future<List<Movie>> fetchMovies() async {
     const String query = '*[_type == "movie"] { _id, title, poster { asset->{ url } } }';
     final List<dynamic> result = await sanityClient.fetch(query: query);
 
-    if (result is List<dynamic>) {
-      setState(() {
-        movies = result.map((data) => Movie.fromJson(data)).toList();
-      });
-    }
+    return result.map((data) => Movie.fromJson(data)).toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Text(''),
+        child: Container(
+          decoration: const BoxDecoration(color: Colors.white70),
+          child: FutureBuilder(
+            future: _movies,
+            builder: (context, snapshot) {
+              if(snapshot.hasData) {
+                List<Movie> movies = snapshot.data!;
+                List<String> moviePosters = movies.map((data) => data.imageUrl).toList();
+
+                return MovieGallery(moviePosters: moviePosters);
+              }
+
+              return const CircularProgressIndicator();
+            },
+          ),
+        ),
       ),
     );
   }
