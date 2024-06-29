@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sanity_flutter_demo/screen/home_screen.dart';
+import 'package:sanity_flutter_demo/screen/movie_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,13 +16,17 @@ class MyApp extends StatelessWidget {
       title: 'Sanity Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.deepPurple,
-          brightness: Brightness.light,
-          background: Colors.white70
-        ),
+            seedColor: Colors.deepPurple,
+            brightness: Brightness.light,
+            background: Colors.white70),
         useMaterial3: true,
       ),
       home: const HomeScreen(),
+      initialRoute: HomeScreen.route,
+      routes: {
+        MovieScreen.route: (context) => const MovieScreen(),
+        HomeScreen.route: (context) => const HomeScreen(),
+      },
     );
   }
 }
