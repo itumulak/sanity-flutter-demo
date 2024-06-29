@@ -55,20 +55,27 @@ class _MovieGalleryState extends State<MovieGallery> {
             onTap: () {
               final Movie movie = widget.movies[index];
               final String poster = widget.moviePosters[index];
-              late Future<List<Cast>> casts = fetchCasts(widget.movies[index].id);
+              late Future<List<Cast>> casts =
+                  fetchCasts(widget.movies[index].id);
 
               Navigator.pushNamed(
                 context,
                 MovieScreen.route,
-                arguments: MovieScreenArgs(
-                  movie,
-                  poster,
-                  casts
-                ),
+                arguments: MovieScreenArgs(movie, poster, casts),
               );
             },
             child: GridTile(
               child: Image.network(
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
                 widget.moviePosters[index],
                 fit: BoxFit.fitHeight,
                 height: double.infinity,

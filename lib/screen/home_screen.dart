@@ -30,7 +30,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<List<Movie>> fetchMovies() async {
-    const String query = '*[_type == "movie"] { _id, title, releaseDate, overview[0] { children[0] { text } }, poster { asset->{ url } }, castMembers[] { person->{ _id, name, image { asset->{ url, metadata } } } }}';
+    const String query =
+        '*[_type == "movie"] { _id, title, releaseDate, overview[0] { children[0] { text } }, poster { asset->{ url } }, castMembers[] { person->{ _id, name, image { asset->{ url, metadata } } } }}';
     final List<dynamic> result = await sanityClient.fetch(query: query);
 
     return result.map((data) => Movie.fromJson(data)).toList();
@@ -45,9 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: FutureBuilder(
             future: _movies,
             builder: (context, snapshot) {
-              if(snapshot.hasData) {
+              if (snapshot.hasData) {
                 List<Movie> movies = snapshot.data!;
-                List<String> moviePosters = movies.map((data) => data.imageUrl).toList();
+                List<String> moviePosters =
+                    movies.map((data) => data.imageUrl).toList();
 
                 return MovieGallery(
                   movies: movies,
@@ -55,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 );
               }
 
-              return const CircularProgressIndicator();
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             },
           ),
         ),
