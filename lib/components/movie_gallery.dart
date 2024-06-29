@@ -45,12 +45,11 @@ class _MovieGalleryState extends State<MovieGallery> {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
         ),
         itemCount: widget.moviePosters.length,
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
+        physics: const ScrollPhysics(),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
