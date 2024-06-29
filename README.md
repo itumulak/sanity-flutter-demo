@@ -4,4 +4,6 @@ This is a sample frontend for the movie dataset, powered by [Sanity](https://www
 
 ## Preview
 
-![](https://github.com/itumulak/sanity-flutter-demo/blob/master/assets/preview.gif)
+<p align="center">
+  <img src="https://github.com/itumulak/sanity-flutter-demo/blob/master/assets/preview.gif"/>
+</p>
