@@ -1,13 +1,9 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sanity_flutter_demo/components/movie_gallery.dart';
 import 'package:sanity_flutter_demo/models/movie.dart';
 import 'package:sanity_flutter_demo/services/sanity_client.dart';
-
-import '../models/cast.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
